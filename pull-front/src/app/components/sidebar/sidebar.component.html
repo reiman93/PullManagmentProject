@@ -1,0 +1,6 @@
+<mat-nav-list id="menu" class="metismenu mm-show" style="padding: 0px;">
+    <!-- class="navbar-nav" -->
+    <app-menu-list-item *ngFor="let item of menuItems.getMenuitem()"
+        [item]="item" [toggled]="toggled">
+    </app-menu-list-item>
+</mat-nav-list>

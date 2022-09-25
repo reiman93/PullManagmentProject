@@ -1,0 +1,27 @@
+:host .icon-dialog {
+  overflow: hidden;
+}
+
+.button-row {
+  justify-content: right;
+}
+
+.icon-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .material-icons {
+    font-size: 4rem !important;
+  }
+
+  mat-icon {
+    height: 4rem !important;
+    width: 4rem !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+:host ::ng-deep .mat-select-value {
+  color: white !important;
+}

@@ -1,0 +1,8 @@
+// CUSTOM COMPONENTS
+@use "../snack-bar/snack-bar-theme" as snackbar;
+@use "./global";
+
+@mixin all-custom-component-theme-colors($theme-or-color-config) {
+  @include snackbar.theme($theme-or-color-config);
+  @include global.theme($theme-or-color-config);
+}

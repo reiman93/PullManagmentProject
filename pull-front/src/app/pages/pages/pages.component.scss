@@ -1,0 +1,86 @@
+.menuScroll {
+    overflow-y: auto !important;
+ /*    overflow-x: hidden !important; */
+    display: flex;
+    flex-direction: column;
+}
+
+.content-notif {
+    inline-size: 150px;
+    overflow: hidden;
+    
+    word-wrap: break-word;
+/*     word-break: break-all;
+overflow-wrap: break-word;
+    max-width: 40ch; */
+}
+.max-lines {
+    display: block;/* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+    max-width: 40ch;
+  }
+
+  .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }
+
+  .class{
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 16px; /* fallback */
+    max-height: 32px; /* fallback */
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    max-width: 40ch;
+ }
+ .otro{
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+
+ 
+
+#demo-1 {
+    overflow: hidden;
+    max-width: 75ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  #demo-2 {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .demo-3 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .heigtSelect{
+    height: calc(100% - 60px);
+  }
+
+  .page-content-mine{
+    overflow-y: auto;
+  }
+  .page-footer-mine{
+    bottom:0;
+    position: fixed !important;
+  }

@@ -1,0 +1,38 @@
+:host {
+/*   display: flex; */
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    > .mat-list-item:not(.expanded) {
+      //   background-color: rgb(108, 150, 176, 0.3) !important;
+    }
+  }
+}
+
+.mat-list-item {
+  // padding: 8px 0;
+  display: flex;
+  width: auto;
+  .routeIcon {
+    margin-left: 5px;
+  }
+  font-size: 0.8525rem;
+  font-weight: 500;
+  line-height: 1.7rem;
+  .icon-expand {
+    font-size: 1.25rem;
+    line-height: 1;
+    width: 1em;
+    height: 1em;
+  }
+  app-menu-list-item .mat-list-item {
+    padding: 0 1.25rem;
+  }
+}
+
+::ng-deep .mat-list-item-content {
+  flex: 1 1 100%;
+}

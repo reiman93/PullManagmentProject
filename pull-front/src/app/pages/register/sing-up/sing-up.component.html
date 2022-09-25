@@ -1,0 +1,95 @@
+<div class="row" #sing>
+  <div class="col-xl-7 mx-auto">
+    <div class="card border-top border-0 border-4 border-white">
+      <div class="card-body p-5">
+        <div class="card-title d-flex align-items-center">
+          <div>
+            <i class="bx bxs-user me-1 font-22 text-white"></i>
+          </div>
+          <h5 class="mb-0 text-white">Registrarse</h5>
+        </div>
+        <hr>
+        <form class="row g-3" [formGroup]="myForm" (ngSubmit)="submitForm()">
+          <div class="col-12">
+            <mat-form-field class="requeried form-label">
+              <mat-label class="requeried">Name:</mat-label>
+              <input matInput formControlName="name" maxlength="50">
+              <mat-error *ngIf="nameControl &&
+                                nameControl.invalid">
+                <mat-error *ngIf="nameControl.errors &&
+                                    nameControl.errors['required']">{{requiredField}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="requeried form-label">
+              <mat-label class="requeried">Email:</mat-label>
+              <input matInput formControlName="email" maxlength="50">
+              <mat-error *ngIf="emailControl &&
+                                emailControl.invalid">
+                <mat-error *ngIf="emailControl.errors &&
+                                    emailControl.errors['required']">{{requiredField}}</mat-error>
+                <mat-error *ngIf="emailControl.errors &&
+                                    emailControl.errors['email']">{{requiredField}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12">
+            <mat-form-field class="requeried form-label">
+              <mat-label class="requeried">User:</mat-label>
+              <input matInput formControlName="user" maxlength="50">
+              <mat-error *ngIf="userControl &&
+                                userControl.invalid">
+                <mat-error *ngIf="userControl.errors &&
+                                    userControl.errors['required']">{{requiredField}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="form-control">
+              <mat-label class="requeried form-label">Password:</mat-label>
+              <input matInput formControlName="pass" type="password">
+              <mat-error *ngIf="passControl &&
+                                passControl.invalid">
+                <mat-error *ngIf="passControl.errors &&
+                                    passControl.errors['required']">{{requiredField}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="form-control">
+              <mat-label class="requeried form-label">Confirm
+                password:</mat-label>
+              <input matInput formControlName="passConfirm" type="password">
+              <mat-error *ngIf="passConfirmControl &&
+                                passConfirmControl.invalid">
+                <mat-error *ngIf="passConfirmControl.errors &&
+                                    passConfirmControl.errors['required']">{{requiredField}}</mat-error>
+              </mat-error>
+              <mat-error *ngIf="passConfirmControl &&
+                                passConfirmControl.invalid">
+                <mat-error *ngIf="passConfirmControl.errors &&
+                                    passConfirmControl.errors['matching']">{{confirmField}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row row-cols-auto g-3">
+            <div class="col">
+              <button type="button" mat-raised-button color="primary" (click)="$event.stopPropagation();
+                                returnToList()">
+                Cancel
+              </button>
+            </div>
+            <div class="col">
+              <button type="submit" mat-raised-button color="primary">
+                Add
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

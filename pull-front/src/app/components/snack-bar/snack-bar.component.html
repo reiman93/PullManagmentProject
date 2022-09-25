@@ -1,0 +1,9 @@
+<div class="snackbar-panel mat-elevation-z6">
+  <div class="icon-message">
+    <mat-icon>{{data.icon}}</mat-icon>
+  </div> 
+  <div class="message">{{data.message}}</div>
+  <div class="dismiss" >
+        <mat-icon (click)="sbRef.dismiss()" *ngIf="data.closeButton">close</mat-icon>
+  </div>
+</div>

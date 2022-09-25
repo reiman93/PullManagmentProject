@@ -1,0 +1,67 @@
+<div>
+    <div class="icon-dialog">
+        <ng-container *ngIf="title">
+            <h1 mat-dialog-title>{{title}}</h1>
+        </ng-container>
+    </div>
+
+
+    <div
+        mat-dialog-content
+        class="card-body"
+    >
+        <form class="row g-3">
+            <mat-form-field
+                appearance="outline"
+                class="input-group input-group-outline mb-3 text-white"
+                *ngFor="let field of data.fields"
+            >
+                <mat-label>{{field.label}}</mat-label>
+                <div class={{field.class}}>
+                    <input
+                        matInput
+                        [(ngModel)]="field.model"
+                        *ngIf="field.type=='input' "
+                    >
+                    <textarea
+                        *ngIf="field.type=='text'"
+                        matInput
+                        [(ngModel)]="field.model"
+                        maxlength="150"
+                        rows="3"
+                    ></textarea>
+                    <mat-select
+                        [(ngModel)]="field.model"
+                        *ngIf="field.type=='combobox'"
+                    >
+                        <mat-option
+                            *ngFor="let key of field.data"
+                            [value]="key.id"
+                        >
+                            {{key.name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </mat-form-field>
+        </form>
+    </div>
+    <div
+        mat-dialog-actions
+        class="button-row"
+    >
+        <button
+            mat-raised-button
+            (click)="close()"
+        >
+            Cancelar
+        </button>
+        <button
+            mat-raised-button
+            [mat-dialog-close]="fields"
+            color="primary"
+            cdkFocusInitial
+        >
+            Aceptar
+        </button>
+    </div>
+</div>

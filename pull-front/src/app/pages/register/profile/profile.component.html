@@ -1,0 +1,232 @@
+<!-- breadcrumb -->
+<div #regist>
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{title}}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['/pages']">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li
+                        class="breadcrumb-item active"
+                        aria-current="page"
+                    >
+                        {{title}}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- end breadcrumb -->
+    <div class="container">
+        <div class="main-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center
+                                text-center">
+                                <img
+                                    [src]="imageSrc"
+                                    alt="Admin"
+                                    class="rounded-circle p-1 bg-primary"
+                                    width="110"
+                                >
+                                <div class="mt-3">
+                                    <h4>{{name}}</h4>
+                                    <p class="mb-1">{{rol}}</p>
+                                    <p class="font-size-sm">{{email}}</p>
+                                    <button
+                                        mat-icon-button
+                                        matSuffix
+                                        (click)="fileInput.click()"
+                                    >
+                                        <mat-icon>attach_file</mat-icon>
+                                    </button>
+                                    <input
+                                        hidden
+                                        (change)="onSelectFile($event)"
+                                        #fileInput
+                                        name="uploadfile"
+                                        type="file"
+                                        id="file"
+                                    >
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form
+                                class="row g-3"
+                                [formGroup]="myForm"
+                                (ngSubmit)="submitForm()"
+                            >
+                                <div class="col-12">
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="requeried form-label">Name:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="name"
+                                            maxlength="50"
+                                        >
+                                        <mat-error *ngIf="nameControl &&
+                                            nameControl.invalid">
+                                            <mat-error *ngIf="nameControl.errors
+                                                &&
+                                                nameControl.errors['required']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div
+                                    class="col-12"
+                                    *ngIf="param!='prof'"
+                                >
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="requeried form-label">Username:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="username"
+                                            maxlength="10"
+                                        >
+                                        <mat-error *ngIf="usernameControl &&
+                                            usernameControl.invalid">
+                                            <mat-error *ngIf="usernameControl.errors
+                                                &&
+                                                usernameControl.errors['required']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div
+                                    class="col-12"
+                                    *ngIf="param!='prof'"
+                                >
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="requeried form-label">Rol:</mat-label>
+                                        <mat-select formControlName="rols_id">
+                                            <mat-option
+                                                *ngFor="let key of rolData"
+                                                [value]="key.id"
+                                            >
+                                                {{key.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="rolControl &&
+                                            rolControl.invalid">
+                                            <mat-error *ngIf="rolControl.errors
+                                                &&
+                                                rolControl.errors['required']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="requeried form-label">Email:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="email"
+                                            maxlength="50"
+                                        >
+                                        <mat-error *ngIf="emailControl &&
+                                            emailControl.invalid">
+                                            <mat-error *ngIf="emailControl.errors &&
+                                                emailControl.errors['required']">{{requiredField}}</mat-error>
+                                            <mat-error *ngIf="emailControl.errors &&
+                                                emailControl.errors['email']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="requeried form-label">Phone number:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="phone"
+                                            maxlength="50"
+                                        >
+                                        <mat-error *ngIf="phoneControl &&
+                    phoneControl.invalid">
+                                            <mat-error *ngIf="phoneControl.errors &&
+                      phoneControl.errors['required']">{{requiredField}}</mat-error>
+                                            <mat-error *ngIf="phoneControl.errors &&
+                      phoneControl.errors['pattern']">{{phoneNumbres}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="form-label">Password:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="pass"
+                                            type="password"
+                                        >
+                                        <mat-error *ngIf="passControl &&
+                                            passControl.invalid">
+                                            <mat-error *ngIf="passControl.errors
+                                                &&
+                                                passControl.errors['required']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-form-field class="form-control">
+                                        <mat-label class="form-label">Confirm
+                      password:</mat-label>
+                                        <input
+                                            matInput
+                                            formControlName="passConfirm"
+                                            type="password"
+                                        >
+                                        <mat-error *ngIf="passConfirmControl &&
+                                            passConfirmControl.invalid">
+                                            <mat-error *ngIf="passConfirmControl.errors
+                                                &&
+                                                passConfirmControl.errors['required']">{{requiredField}}</mat-error>
+                                        </mat-error>
+                                        <mat-error *ngIf="passConfirmControl &&
+                                            passConfirmControl.invalid">
+                                            <mat-error *ngIf="passConfirmControl.errors
+                                                &&
+                                                passConfirmControl.errors['matching']">{{confirmField}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="row row-cols-auto g-3">
+                                    <div class="col">
+                                        <button
+                                            type="button"
+                                            mat-raised-button
+                                            color="primary"
+                                            (click)="$event.stopPropagation();
+                                                  clearForm()"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button
+                                            type="submit"
+                                            mat-raised-button
+                                            color="primary"
+                                        >
+                                            {{btnLabel}}
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

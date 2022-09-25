@@ -1,0 +1,18 @@
+<div class="icon-dialog">
+<mat-icon color="primary">circle_notifications_outlined</mat-icon>
+</div>
+
+
+<ng-container *ngIf="title">
+<h1 mat-dialog-title>{{title}}</h1>
+</ng-container>
+
+<div mat-dialog-content>
+    <div class="dialog-message">
+      <i>{{message}}</i>
+    </div>
+</div>
+<div mat-dialog-actions class="button-row">
+  <button mat-raised-button (click)="close()">Cancelar</button>
+  <button mat-raised-button [mat-dialog-close]="acceptAction" color="primary" cdkFocusInitial>Aceptar</button>
+</div>

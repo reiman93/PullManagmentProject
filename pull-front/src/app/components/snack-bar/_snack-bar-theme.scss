@@ -1,0 +1,46 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $b: map.get($color-config, background);
+  $f: map.get($color-config, foreground);
+
+  .mat-snack-bar-container {
+    box-shadow: none;
+  }
+
+  .snackbar .snackbar-panel {
+    color: mat.get-color-from-palette($f, app-bar) !important;
+    .icon-message mat-icon {
+      color: mat.get-color-from-palette($f, app-bar) !important;
+    }
+  }
+
+  .basic-snackbar .snackbar-panel {
+    background: mat.get-color-from-palette($b, basic);
+  }
+
+  .success-snackbar .snackbar-panel {
+    background: mat.get-color-from-palette($b, success);
+  }
+
+  .info-snackbar .snackbar-panel {
+    background: mat.get-color-from-palette($b, info);
+  }
+
+  .warning-snackbar .snackbar-panel {
+    background: mat.get-color-from-palette($b, warning);
+  }
+
+  .error-snackbar .snackbar-panel {
+    background: mat.get-color-from-palette($b, error);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+}

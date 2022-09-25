@@ -1,0 +1,87 @@
+<div class="row" #userL>
+    <div class="col-12 mx-auto">
+        <h6 class="mb-0 text-uppercase">Users</h6>
+        <hr>
+        <div class="border-0 border-4 border-white">
+            <div class="card-body p-5">
+                <div class="buttons-row">
+                    <button
+                        (click)="$event.stopPropagation(); register()"
+                        mat-raised-button
+                        color="primary">
+                        Add
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="$event.stopPropagation(); deleteMany()"
+                        [disabled]="slectedRows">
+                        Delete
+                    </button>
+                </div>
+                <hr>
+                <app-mat-data-table
+                    [selectAvailable]="true"
+                    #tabla
+                    [serviceData]="service"
+                    [verticalLine]="true">
+
+                    <app-mat-column-table
+                        title="Name"
+                        matColumnDef="name"
+                        type="string"
+                        [sort]="true">
+                        <td
+                            mat-cell
+                            style="text-align: left"
+                            *matCellDef="let row">
+                            <img
+                                src={{foto[row.id]}}
+                                class="rounded-circle mySpacer"
+                                width="40"
+                                height="40"
+                                alt="user avatar">
+                            {{row.name}}
+                        </td>
+                    </app-mat-column-table>
+                    <app-mat-column-table
+                        title="Username"
+                        matColumnDef="username"
+                        type="string"
+                        [sort]="true">
+                        <td
+                            mat-cell
+                            style="text-align: right"
+                            *matCellDef="let row">
+                            {{row.username}}
+                        </td>
+                    </app-mat-column-table>
+                    <app-mat-column-table
+                        title="Rol"
+                        matColumnDef="rol"
+                        type="string"
+                        [sort]="true">
+                        <td
+                            mat-cell
+                            style="text-align: right"
+                            *matCellDef="let row">
+                            {{row.rols.name}}
+                        </td>
+                    </app-mat-column-table>
+                    <app-mat-paginator-data-table
+                        [pageSizeOptions]="[5,10,25,100]"></app-mat-paginator-data-table>
+                    <app-mat-error-data-table>
+                        There are problems to load data.
+                        <br>
+                        <button
+                            mat-raised-button
+                            color="warn"
+                            (click)="tabla.reloadData()">
+                            Relaod
+                        </button>
+                    </app-mat-error-data-table>
+                </app-mat-data-table>
+            </div>
+        </div>
+    </div>
+</div>

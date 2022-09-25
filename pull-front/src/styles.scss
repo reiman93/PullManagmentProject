@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+@use "./app/components/theme/theme.scss";
+@import '~material-icons/iconfont/material-icons.scss';
+/* html,
+body {
+    height: 100%;
+} */
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif
+}
+
+.snackbar {
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+.mat-snack-bar-container {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+h2 {
+    margin: 0 0 0.1rem !important;
+}
+
+.buttons-row {
+    margin: 0.8rem 0;
+
+    button {
+        margin-right: 0.5rem;
+    }
+}
+
+.mat-paginator-page-size-label {
+    visibility: hidden;
+    position: relative;
+    width: 8rem;
+}
+
+.mat-paginator-page-size-label:after {
+    position: absolute;
+    visibility: visible;
+    top: 0;
+    left: 0;
+    content: "Elements per page: " !important;
+}
+
+ 
+::-webkit-scrollbar {
+    width: 0.3125rem;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #f7f9fc;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #e4e9f2;
+} 
+

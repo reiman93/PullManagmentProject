@@ -1,0 +1,124 @@
+<main class="wrapper">
+    <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+        <span class="mask bg-gradient-dark opacity-6"></span>
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                <div class="col mx-auto">
+                    <!-- <div class="mb-4 text-center">
+                        <img src="assets/img/logo-img.png" width="180" alt="" />
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="border p-4 rounded">
+                                <div class="text-center">
+                                    <h3 class="">Autenticarse</h3>
+                                </div>
+                                <div class="login-separater text-center mb-4"> <span>SIGN IN WITH USER</span>
+                                    <hr/>
+                                </div>
+                                <div class="form-body">
+                                    <form role="form" class="row g-3" [formGroup]="myForm" (ngSubmit)="submitForm()">
+                                        <div class="col-12">
+                                            <mat-form-field class="form-control" appearance="outline">
+                                                <mat-label class="requeried form-label">Usuario</mat-label>
+                                                <input matInput formControlName="user" maxlength="50">
+                                                <mat-error *ngIf="userControl && userControl.invalid">
+                                                    <mat-error *ngIf="userControl.errors && userControl.errors['required']">{{requiredField}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <mat-form-field class="form-control" appearance="outline">
+                                                <mat-label class="requeried form-label">Contraseña:</mat-label>
+                                                <input matInput formControlName="pass" type="password">
+                                                <mat-error *ngIf="passControl && passControl.invalid">
+                                                    <mat-error *ngIf="passControl.errors && passControl.errors['required']">{{requiredField}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Entrar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+                    <div class="card border-top border-0 border-4 border-white">
+                        <div class="card-body p-5">
+                            <div class="card-title text-center">
+                                <i class="bx bxs-user-circle text-white font-50"></i>
+                                <h5 class="mb-5 mt-2 text-white">User Login</h5>
+                            </div>
+                            <hr>
+                            <form
+                                class="row g-3"
+                                [formGroup]="myForm"
+                                (ngSubmit)="submitForm()"
+                            >
+                                <div class="col-12">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <i class='bx bxs-user'></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            class="form-control border-start-0"
+                                            formControlName="user"
+                                            maxlength="50"
+                                            placeholder="Username"
+                                        >
+                                    </div>
+                                    <!-- <mat-error *ngIf="userControl && userControl.invalid">
+                                        <mat-error *ngIf="userControl.errors && userControl.errors['required']">{{requiredField}}
+                                        </mat-error>
+                                    </mat-error> -->
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text">
+                                            <i class='bx bxs-lock-open'></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            class="form-control border-start-0"
+                                            formControlName="pass"
+                                            type="password"
+                                            placeholder="Password"
+                                        >
+                                    </div>
+                                    <!-- <mat-error *ngIf="passControl && passControl.invalid">
+                                        <mat-error *ngIf="passControl.errors && passControl.errors['required']">{{requiredField}}
+                                        </mat-error>
+                                    </mat-error> -->
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-grid">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-light btn-lg px-5"
+                                        >
+                                            <i class='bx bxs-lock-open'></i>
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

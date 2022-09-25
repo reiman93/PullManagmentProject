@@ -1,0 +1,25 @@
+.snackbar-panel {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 3px;
+  max-width: 18rem;
+  .icon-message mat-icon {
+    font-size: 3rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    margin-right: 3px !important;
+  }
+  .message {
+    justify-content: center;
+    margin: 0 5px;
+  }
+  .dismiss {
+    cursor: pointer;
+  }
+  > *:not(:last-child) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } 
+}
