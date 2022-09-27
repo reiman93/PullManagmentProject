@@ -34,16 +34,32 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth.registration',
     "corsheaders",
     'rest_framework_simplejwt',
     'poll_managment',
-    'rest_registration',
 ]
+
+SITE_ID = 1
+REGISTRATION_API_ACTIVATION_SUCCESS_URL = '/'
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+AUTHENTICATION_BACKENDS = (
+   "django.contrib.auth.backends.ModelBackend",
+   "allauth.account.auth_backends.AuthenticationBackend"
+)
 
 REST_REGISTRATION = {
     'REGISTER_VERIFICATION_ENABLED': False,
@@ -64,19 +80,17 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
- 'http://*',
- 'https://*',
+    "https://8000",
+    "https://*",
+	"http://*",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+	"http://localhost:4200",
 ]
 
-CORS_ALLOWED_METHODS=[
- "GET",
- "POST",
- "OPTIONS",
- "PATCH",
- "PUT",
-"DELETE",
-]
-#CORS_ALLOW_CREDENTIALS =True
+CORS_ALLOW_CREDENTIALS = True
+
+
 
 ROOT_URLCONF = 'Pull.urls'
 
@@ -162,13 +176,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #SECURE_SSL_REDIRECT = False
 
 REST_FRAMEWORK = {
-      'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+      'DEFAULT_AUTHENTICATION_CLASSES': ( 'rest_framework_simplejwt.authentication.JWTAuthentication', ),
+      'DEFAULT_PERMISSIONS_CLASSES':('rest_framework.permissions.IsAuthenticated',)
 
-    'DEFAULT_PERMISSIONS_CLASSES':(
-        'rest_framework.permissions.IsAuthenticated',
-    )
+   # 'knox.auth.TokenAuthentication',
 }
 
 #REST_REGISTRATION = {

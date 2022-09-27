@@ -5,6 +5,9 @@ from rest_framework_simplejwt import views as jwt_views
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.urls import path
+#from auth.views import MyObtainTokenPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -27,5 +30,10 @@ urlpatterns = [
     path('poll/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('poll/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),    
     path('protected/', Protected.as_view(), name='protected'),
+    path('login/', MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
+    path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegisterView.as_view(), name='auth_register'),
    # path('register', include(api_urlpatterns)),
+   # path('register/', RegisterAPI.as_view(), name='register'),
+   
 ]

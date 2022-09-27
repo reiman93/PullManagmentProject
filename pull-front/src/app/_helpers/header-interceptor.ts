@@ -12,10 +12,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request.clone({
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
       })
     })).pipe(catchError((err) => {
       if (err.status === 401) {

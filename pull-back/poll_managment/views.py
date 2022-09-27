@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import PollSerializers, OptionSerializers
+from .serializers import PollSerializers, OptionSerializers, RegisterSerializer
 from .models import Poll, Option
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status, permissions
@@ -18,17 +18,36 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
+from django.contrib.auth.models import User
+from rest_framework import generics
+
+from rest_framework import generics, permissions
+
+
+from .serializers import MyTokenObtainPairSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+
+class MyObtainTokenPairView(TokenObtainPairView):
+  #  permission_classes = (AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
+
 
 class Poll_APIView(APIView):    
-    permission_classes = [IsAuthenticated]
+ #   permission_classes = [IsAuthenticated]
     def get(self, request, format=None, *args, **kwargs):
         poll = Poll.objects.all()
         serializer = PollSerializers(poll, many=True)
         
         return Response(serializer.data)    
     
-  #  @api_view(["POST"])
-  #  @permission_classes([permissions.IsAuthenticated])
     def post(self, request, format=None):
         serializer = PollSerializers(data=request.data)
         if serializer.is_valid():
@@ -50,8 +69,6 @@ class Poll_APIView_Detail(APIView):
         serializer = PollSerializers(poll)  
         return Response(serializer.data)    
 
-    @api_view(["POST"])
-    @permission_classes([permissions.IsAuthenticated])
     
     def put(self, request, pk, format=None):
         poll = self.get_object(pk)
@@ -61,8 +78,6 @@ class Poll_APIView_Detail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
 
-    @api_view(["POST"])
-    @permission_classes([permissions.IsAuthenticated])
     def delete(self, request, pk, format=None):
         poll = self.get_object(pk)
         poll.delete()
@@ -70,16 +85,14 @@ class Poll_APIView_Detail(APIView):
 
 
 class Option_APIView(APIView):
-#    @api_view(["POST"])
-#    @permission_classes([permissions.IsAuthenticated])    
+    
     def get(self, request, format=None, *args, **kwargs):
         option = Option.objects.all()
         serializer = OptionSerializers(option, many=True)
         
         return Response(serializer.data)    
     
-#    @api_view(["POST"])
-#    @permission_classes([permissions.IsAuthenticated])
+
     def post(self, request, format=None):
         serializer = OptionSerializers(data=request.data)
         if serializer.is_valid():
@@ -88,23 +101,19 @@ class Option_APIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class Option_APIView_Detail(APIView): 
-  #  @api_view(["POST"])
-  #  @permission_classes([permissions.IsAuthenticated])   
+
     def get_object(self, pk):
         try:
             return Option.objects.get(pk=pk)
         except Option.DoesNotExist:
             raise Http404  
 
-   # @api_view(["POST"])
-   # @permission_classes([permissions.IsAuthenticated])
     def get(self, request, pk, format=None):
         option = self.get_object(pk)
         serializer = OptionSerializers(option)  
         return Response(serializer.data)    
 
-  #  @api_view(["POST"])
-  #  @permission_classes([permissions.IsAuthenticated])
+
     def put(self, request, pk, format=None):
         option = self.get_object(pk)
         serializer = OptionSerializers(option, data=request.data)
@@ -134,7 +143,7 @@ class Pull_APIView_Result(APIView):
         return JsonResponse(list(porcents), safe=False)
 
 class Option_APIView_Mark(APIView):
-    permission_classes = [IsAuthenticated]
+ #   permission_classes = [IsAuthenticated]
 
     def put(self, request, pk, format=None):
         option1=Option()
