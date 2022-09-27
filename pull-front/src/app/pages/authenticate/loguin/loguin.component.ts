@@ -63,6 +63,10 @@ export class LoguinComponent implements OnInit {
       returnToList() {
             this.router.navigateByUrl('pages');
       }
+      
+      goToRegister() {
+            this.router.navigateByUrl('register');
+      }
 
       submitForm(): void {
             if (this.myForm.valid) {
@@ -97,12 +101,4 @@ export class LoguinComponent implements OnInit {
                   }
             };
       }
-
-      saveText(text: any, filename: any, url: any) {  //function to save fale important!!!
-            var a = document.createElement('a');
-            a.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(text));
-            a.setAttribute('download', filename);
-            a.click()
-      }
-
 }

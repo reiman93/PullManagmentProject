@@ -33,10 +33,8 @@ export class PagesComponent implements OnInit {
 
 
   constructor(
-    private renderer: Renderer2,
     private authenticationService: LoguinServiceService,
-    private router: Router,
-    @Inject(DOCUMENT) private document: Document,
+    private router: Router
   ) {
     this.authenticationService.currentUser.subscribe((x: User) => this.currentUser = x);
   }

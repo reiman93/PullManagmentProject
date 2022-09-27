@@ -1,0 +1,30 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+::ng-deep .mat-form-field {
+    .mat-form-field-underline {
+        position: absolute;
+        width: 0% !important;
+        pointer-events: none;
+        transform: scale3d(1, 1.0001, 1);
+    }
+}
+
+/*::ng-deep .mat-stepper-horizontal {
+    background-color: rgba(#1A73E8, 0.38) !important;
+}*/
+
+
+.padding-btn {
+    padding: 15px;
+}
+
+.containerToggle {
+    display: inline-block;
+    vertical-align: top;
+}

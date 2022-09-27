@@ -35,7 +35,6 @@ export class AppComponent implements OnDestroy, OnInit{
         this.router.navigate(['/auth']);
     }
     register() {
-        console.warn("entra aki????")
         this.router.navigate(['/register']);
     }
 }

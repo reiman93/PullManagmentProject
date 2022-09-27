@@ -24,9 +24,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
-
-
-
+import {MatStepperModule} from '@angular/material/stepper'; 
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 
@@ -57,7 +55,8 @@ const modules = [
     MatSlideToggleModule,
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatStepperModule
 ];
 
 @NgModule({

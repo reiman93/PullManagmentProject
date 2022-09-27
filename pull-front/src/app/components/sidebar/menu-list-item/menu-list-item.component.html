@@ -31,7 +31,7 @@
 </li>
 <li [ngClass]="{'mm-active': item.route ?
     router.isActive(item.route,matchOptions): true, 'expanded': expanded}"
-    *ngIf="matchingRoles.length> 0 && toggled"
+    *ngIf="toggled"
     >
     <a
         mat-list-item

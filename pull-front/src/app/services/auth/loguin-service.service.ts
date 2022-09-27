@@ -80,8 +80,8 @@ export class LoguinServiceService {
   }
   authenticateUser(data: any, service: string): Observable<any> {
     return this.httpClient.post<any>(this.enviroment.config.url + service, {
-      username: data.user,
-      password: data.pass//CryptoJS.AES.encrypt(data.pass, CryptoJS.enc.Base64.parse(KEY), this.configuration).toString()
+      username: data.username,
+      password: data.password
     }).pipe(map((resp: any) => {
       let foto = resp.foto ? resp.foto : "assets/img/user.png";
       let userData = new User( data.username, resp.access);
@@ -115,16 +115,7 @@ export class LoguinServiceService {
   }
 
   updateUser(data: any, service: string): Observable<any> {
-    return this.httpClient.post<any>(this.enviroment.config.url + service, {
-      username: data.username,
-      name: data.name,
-      email: data.email,
-      phone_number: data.phone,
-      password: data.password,
-      foto: data.foto,
-      rols_id: data.rols_id,
-      departments_id: data.departments_id
-    }, httpOptions);
+    return this.httpClient.post<any>(this.enviroment.config.url + service, data, httpOptions);
   }
 
   hasRole(role: IRole[]) {

@@ -15,10 +15,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const currentUser = this.authenticationService.currentUserValue;
+    console.warn("entra aki estooooo en el guardian", currentUser)
     if (currentUser) {
       return true;
     }
-    this.router.navigate(['/auth'], { queryParams: { returnUrl: state.url } });
+     this.router.navigate(['/auth'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 
@@ -28,11 +29,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     if (!this.authenticationService.currentUserValue) {
       return false;
     }
-   /* const roles = route.data!.roles as IRole[];
-
-    if (!this.authenticationService.hasRole(roles)) {
-      return false;
-    }*/
+    /* const roles = route.data!.roles as IRole[];
+ 
+     if (!this.authenticationService.hasRole(roles)) {
+       return false;
+     }*/
     return true;
   }
 }

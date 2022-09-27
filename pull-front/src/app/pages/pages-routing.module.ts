@@ -9,18 +9,10 @@ const routes: Routes =
         path: '', component: PagesComponent,
         children: [
             {
-                path: 'register',
-                loadChildren: () => import('./register/register.module').then((n) => n.RegisterModule),
-                canLoad: [AuthGuard],
-                canActivate: [AuthGuard],
-                data: {
-                    roles: [
-                        Role.Admin,
-                        Role.QA,
-                    ]
-                }
-            },
-            {
+                path: 'poll',
+                loadChildren: () => import('./poll/poll.module').then((n) => n.PollModule),
+                canActivate: [AuthGuard]
+            },{
                 path: '**',
                 redirectTo: 'auth',
             }

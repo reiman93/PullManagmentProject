@@ -7,39 +7,16 @@ import { Role } from './../../models/user';
 
 const routes: Routes =
     [
-        { path: '', component: SingUpComponent },
         {
-            path: 'profile/:param', component: ProfileComponent,
-            canLoad: [AuthGuard],
-            canActivate: [AuthGuard],
-            data: {
-                roles: [
-                    Role.Admin,
-                    Role.QA,
-                ]
-            }
-        },
-        {
-            path: 'create/:param', component: ProfileComponent,
-            canLoad: [AuthGuard],
-            canActivate: [AuthGuard],
-            data: {
-                roles: [
-                    Role.Admin,
-                ]
-            }
+            path: 'create', component: ProfileComponent,
         },
         {
             path: "list",
             canLoad: [AuthGuard],
             canActivate: [AuthGuard],
-            data: {
-                roles: [
-                    Role.Admin,
-                ]
-            },
             loadChildren: () => import('./list/list.module').then(m => m.ListModule)
-        }
+        },
+        { path: '', redirectTo: 'create', pathMatch: 'full' },
     ];
 
 @NgModule({

@@ -9,6 +9,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/pages.module').then((n) => n.PagesModule),
         canActivate: [AuthGuard]
     },
+    {
+        path: 'register',
+        loadChildren: () => import('./pages/register/register.module').then((n) => n.RegisterModule),
+    },
     { path: 'auth', loadChildren: () => import('./pages/authenticate/authenticate.module').then((n) => n.AuthenticateModule) },
     { path: '', redirectTo: 'auth', pathMatch: 'full' },
     {

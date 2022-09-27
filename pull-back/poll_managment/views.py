@@ -50,9 +50,20 @@ class Poll_APIView(APIView):
     
     def post(self, request, format=None):
         serializer = PollSerializers(data=request.data)
+        poll = Poll(question=request.data["question"], cant_options=request.data["cant_options"], total_participants=0)
+        poll.save()
+
         if serializer.is_valid():
             serializer.save()
+            id = Poll.objects.latest('id') 
+            cant=request.data['cant_options']
+            list=request.data['options']
+        
+            for opt in list:
+                options= Option(name=opt, poll=id, cant_marks=0 )    
+                options.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class Poll_APIView_Detail(APIView):    

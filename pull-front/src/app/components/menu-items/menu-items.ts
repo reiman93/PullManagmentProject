@@ -4,9 +4,9 @@ import { INavItem } from '../sidebar/menu-list-item/nav-item';
 
 const MENUITEMS: INavItem[] = [
   {
-    displayName: 'Settings',
+    displayName: 'Polls',
     iconName: 'settings',
-    route: '/pages/nomenclators',
+    route: '/pages/poll',
     role: [Role.Admin]
   }
 ];
