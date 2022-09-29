@@ -1,10 +1,11 @@
 from django.db import models
-from model_utils.models import TimeStampedModel, SoftDeletableModel
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Poll(models.Model):
     question 				= models.CharField(max_length=500)
     cant_options 			= models.IntegerField()
+    user_id          		= models.ForeignKey(User, on_delete = models.CASCADE)
     total_participants 		= models.IntegerField()
 
     def __str__(self):

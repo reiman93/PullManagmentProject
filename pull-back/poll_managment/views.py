@@ -11,6 +11,8 @@ from django.http import Http404
 from django.http import JsonResponse
 from django.views import View
 from django.core import serializers
+
+
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
@@ -27,8 +29,7 @@ from rest_framework import generics, permissions
 from .serializers import MyTokenObtainPairSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.http import HttpResponse
-import json
+
 
 
 class RegisterView(generics.CreateAPIView):
@@ -45,35 +46,31 @@ class Poll_APIView(APIView):
  #   permission_classes = [IsAuthenticated]
     def get(self, request, format=None, *args, **kwargs):
         poll = Poll.objects.all()
+        #for p in poll:
+            #user=User.objects.get(id=p.user_id)
+            #p.user_id=user.username
         serializer = PollSerializers(poll, many=True)
-
-        
         return Response(serializer.data)    
     
     def post(self, request, format=None):
-        user_id=User.objects.filter(username=request.data["user_id"])
-        request.data["user_id"]=user_id
-        request.data["total_participants"]=0
-       # serializer = PollSerializers(data=request.data)
-        
-       # poll = Poll(question=request.data["question"], cant_options=request.data["cant_options"], total_participants=0, user_id=request.data["user_id"])
+        serializer = PollSerializers(data=request.data)
+        user_id=User.objects.get(username=request.data["user_id"])
+        request.data["user_id"]=user_id.id
+       # poll = Poll(question=request.data["question"], cant_options=request.data["cant_options"], total_participants=0)
        # poll.save()
 
         if serializer.is_valid():
-            polls=Poll.objects.get(id=request.data["id"])
-            polls.total_participants=polls.total_participants+1
-            polls.save()
-        #    id = Poll.objects.filtrer() 
+            serializer.save()
+            id = Poll.objects.latest('id') 
             cant=request.data['cant_options']
             list=request.data['options']
-        
+          
             for opt in list:
-                options= Option(name=opt, poll=request.data["id"], cant_marks=0 )    
+                options= Option(name=opt['name'], poll=id, cant_marks=0 )    
                 options.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
         
 class Poll_APIView_Detail(APIView):    
     
@@ -84,41 +81,40 @@ class Poll_APIView_Detail(APIView):
         except Poll.DoesNotExist:
             raise Http404  
 
-
     def get(self, request, pk, format=None):
         poll = self.get_object(pk)
         serializer = PollSerializers(poll)  
         return Response(serializer.data)    
-  
 
     
     def put(self, request, pk, format=None):
-        user_id=User.objects.get(username=request.data["user_id"])
-        request.data["user_id"]=user_id
-        request.data["total_participants"]=0
-        serializer = PollSerializers(data=request.data)
-        
+            user_id=User.objects.get(username=request.data["user_id"])
+            request.data["user_id"]=user_id.id
+            request.data["total_participants"]=0
+            print(request.data)
+            serializer = PollSerializers(data=request.data)
+            
 
-        if serializer.is_valid():
-            poll=Poll.objects.get(id=request.data["id"])
-            poll.total_participants=poll.total_participants+1
-            poll.save()
+            if serializer.is_valid():
+                poll=Poll.objects.get(id=pk)
+                poll.total_participants=0
+                poll.save()
 
-           # id = Poll.objects.filter() 
-            cant=request.data['cant_options']
-            list=request.data['options']
-            options=Option.objects.filter(poll=pk)
-            options.delete()
-           # options.save()
-        
-            for opt in list:
-                options= Option(name=opt, poll=poll, cant_marks=0)    
-                options.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # id = Poll.objects.filter() 
+                cant=request.data['cant_options']
+                list=request.data['options']
+                options=Option.objects.filter(poll=pk)
+                options.delete()
+            # options.save()
+            
+                for opt in list:
+                    options= Option(name=opt['name'], poll=poll, cant_marks=0)    
+                    options.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
-    def delete(self, request,pk, format=None):
+    def delete(self, request, pk, format=None):
         poll = self.get_object(pk)
         poll.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -154,17 +150,16 @@ class Option_APIView_Detail(APIView):
         return Response(serializer.data)    
 
 
-    def put(self, request, pk, format=None):
-        option = self.get_object(pk)
-        serializer = OptionSerializers(option, data=request.data)
+    def post(self, request, format=None):
+        serializer = OptionSerializers(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+           serializer.save()
+           return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
  #   @api_view(["POST"])
  #   @permission_classes([permissions.IsAuthenticated])    
-    def delete(self, request, format=None):
+    def delete(self, request, pk, format=None):
         option = self.get_object(pk)
         option.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -186,7 +181,6 @@ class Pull_APIView_Result(APIView):
 
 class Option_APIView_Mark(APIView):
  #   permission_classes = [IsAuthenticated]
-
     def post(self, request, format=None):
         poll=Poll.objects.get(id=request.data["id"])
         poll.total_participants=poll.total_participants+1
@@ -195,9 +189,7 @@ class Option_APIView_Mark(APIView):
         option1 = Option.objects.get(id=request.data["id_option"])
         option1.cant_marks=option1.cant_marks+1
         option1.save()
-        return HttpResponse("Success")
-        
-
+        return Response(status=status.HTTP_200_OK)
 
 class Protected(APIView):
     permission_classes = [IsAuthenticated]
@@ -209,5 +201,5 @@ class GetOptions(APIView):
     def get(self, request,pk, format=None):
         #id=request.data["id"]
         options = Option.objects.filter(poll = pk)
-        #options = serializers.serialize("json",  Option.objects.filter(poll = pk))
-        return JsonResponse(list(options.values()), safe=False)
+        #obj = serializers.serialize("json",  options)
+        return JsonResponse(list(options.values()),safe=False)

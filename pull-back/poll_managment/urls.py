@@ -23,10 +23,9 @@ app_name = 'poll_managment'
 urlpatterns = [
     path('poll', Poll_APIView.as_view()), 
     path('poll/<int:pk>/', Poll_APIView_Detail.as_view()),
-    path('option/', Option_APIView.as_view()), 
-    path('option_view/', Option_APIView_Detail.as_view()),   
-    #GetOptions
-    path('options/<int:pk>', GetOptions.as_view()),    
+    path('option', Option_APIView.as_view()), 
+    path('option/<int:pk>/', Option_APIView_Detail.as_view()),   
+    path('options/<int:pk>', GetOptions.as_view()),   
     path('poll_result/<int:pk>',Pull_APIView_Result.as_view()),
     path('poll_mark',Option_APIView_Mark.as_view()),
     path('poll/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
