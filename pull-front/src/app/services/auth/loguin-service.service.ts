@@ -56,28 +56,7 @@ export class LoguinServiceService {
     this.currentUserSubject.next(current);
   }
 
-  findAllPagination(
-    skip?: number,
-    take?: number | undefined,
-    sort?: ISorting | undefined,
-    dataFilter?: ISearchFilter[],
-  ): Observable<unknown> {
-    const page: IPaginateDTO = {
-      skip: skip,
-      take: take,
-      sortField: sort,
-      orSearchFields: dataFilter,
-      select: [],
-    };
-    return this.httpClient.post<any>(this.enviroment.config.url + 'storeUser',
-      page).pipe(map((data): unknown => {
-        return (
-          data.data as {
-            user: IUser[];
-          }
-        ).user;
-      }))
-  }
+
   authenticateUser(data: any, service: string): Observable<any> {
     return this.httpClient.post<any>(this.enviroment.config.url + service, {
       username: data.username,
@@ -130,11 +109,5 @@ export class LoguinServiceService {
   logout() {
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-  }
-
-  deleteMany(ids: any, service: string): Observable<any> {
-    return this.httpClient.post<any>(this.enviroment.config.url + service, { ids }, httpOptions).pipe(map((resp: any) => {
-      return resp;
-    }));
   }
 }

@@ -1,0 +1,87 @@
+<div
+    class="row"
+    #userL
+>
+    <div class="col-12 mx-auto">
+        <h6 class="mb-0 text-uppercase">Poll</h6>
+        <div class="buttons-row">
+            <button [routerLink]="['../create']" mat-raised-button
+                color="primary">
+                Add
+            </button>
+        </div>
+        <hr>
+        <div class="card border-top border-0 border-4 border-white">
+            <div class="card-body p-5">
+                <table
+                    mat-table
+                    [dataSource]="dataSource"
+                    class="mat-elevation-z8"
+                >
+                    <!-- - Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th
+                            mat-header-cell
+                            *matHeaderCellDef
+                        >
+                            Question
+                        </th>
+                        <td
+                            mat-cell
+                            *matCellDef="let element"
+                        >
+                            {{element.question}}
+                        </td>
+                    </ng-container>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="options">
+                        <th
+                            mat-header-cell
+                            *matHeaderCellDef
+                        >
+                            Options
+                        </th>
+                        <td
+                            mat-cell
+                            *matCellDef="let row"
+                            style="padding-right: 0"
+                        >
+                            <div style="text-align: center">
+                                <div style="display: inline-flex">
+                                    <button
+                                        (click)="$event.stopPropagation();
+                                make(row.id)"
+                                        mat-icon-button
+                                        mat-button
+                                    >
+                                        <mat-icon>visibility</mat-icon>
+                                    </button>
+                                    <button
+                                        (click)="$event.stopPropagation();
+                                    update(row.id)"
+                                        mat-icon-button
+                                        mat-button
+                                    >
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tbody>
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns;"
+                        ></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-12 mx-auto">
+        <div class="card border-top border-0 border-4 border-white">
+            <div class="card-body p-5">
+                <div class="card-title d-flex align-items-center">
+                    <div>
+                        <i class="bx bxs-user me-1 font-22 text-white"></i>
+                    </div>
+                    <h5 class="mb-0 text-white">{{poll.question}}</h5>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <mat-radio-group>
+                        <!-- *ngIf="resetField[row.id]" [(ngModel)]="resetField[row.id]" -->
+                        <!-- formControlName="{{'des' + row.id}}" -->
+                        <div
+                            class="row pa-4"
+                            *ngFor="let item of options; let i = index"
+                        >
+                            <div class="row">
+                                <div class="col-2">
+                                    <mat-radio-button
+                                        (change)="selectOption($event,item.id)"
+                                        (click)="$event.stopPropagation()"
+                                        value=item.id
+                                        style="display: inline-block;"
+                                        class="margin-toogle"
+                                    >
+                                        {{item.name}}
+                                    </mat-radio-button>
+                                </div>
+                                <div class="col-10">
+                                    <mat-progress-bar
+                                        style="display: inline-block;"
+                                        class="margin-toogle"
+                                        *ngIf="percent[i]"
+                                        mode="determinate"
+                                        [value]=percent[i]
+                                    ></mat-progress-bar>
+                                    <span *ngIf="percent[i]">{{percent[i]+"%"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-radio-group>
+                </div>
+                <div
+                    align="right"
+                    class="buttons-row padding-top-15"
+                >
+                    <button
+                        type="button"
+                        mat-raised-button
+                        color="primary"
+                        (click)="$event.stopPropagation();
+                                returnToList()"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

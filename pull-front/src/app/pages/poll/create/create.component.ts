@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, I } from '@angular/cdk/keycodes';
 import { PollService } from 'src/app/services/poll.service';
+import { SnakBarService } from 'src/app/components/snack-bar/snak-bar.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 export interface Option {
   name: string;
@@ -24,7 +27,15 @@ export class CreateComponent implements OnInit {
 
   requiredField = "Required field.";
   totalQuestions: string[] = [];
-  constructor(private service: PollService) { }
+  id: any;
+  Title: any;
+  constructor(
+    private service: PollService,
+    private snakBarService: SnakBarService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   titleForm = new FormGroup({
     title: new FormControl(null, {
@@ -74,7 +85,36 @@ export class CreateComponent implements OnInit {
       this.options.splice(index, 1);
     }
   }
+
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.Title = "Edit Poll"
+      this.findById(this.id)
+    } else {
+      this.Title = "Create Poll"
+    }
+  }
+
+  returnToList(): void {
+    this.location.back();
+  }
+
+  findById(id: any) {
+    this.service.getById("poll", id).subscribe((result: any) => {
+      console.warn("Este es el resultado", result)
+      this.titleForm.patchValue({
+        title: result.question,
+      });
+      this.service.getOptsById("options", id).subscribe({
+        next: (res: any) => {
+          this.options = res;
+        },
+        error: (err: any) => {
+
+        }
+      })
+    });
   }
   cleanData() {
     // this.equipmentDataGridService.cleanData();
@@ -97,58 +137,43 @@ export class CreateComponent implements OnInit {
   }
   create(): void {
     if (this.titleForm.valid) {
-      this.service.createPoll({
-        'question': this.titleFormControl?.value as string,
-        'options': this.options,
-        'cant_options': this.options.length,
-        'total_participants': 0
-      }, "poll").subscribe({
-        next: (result: any) => {
-          console.warn("resulto bien", result)
-        },
-        error: (err: any) => {
+      if (this.id) {
+        this.service.editPoll({
+          'question': this.titleFormControl?.value as string,
+          'options': this.options,
+          'cant_options': this.options.length,
+          'user_id': JSON.parse(sessionStorage.getItem('currentUser')!).username,
+          'total_participants': 0
+        }, "poll/" + this.id + "/").subscribe({
+          next: (result: any) => {
+            console.warn("resulto bien", result)
+            this.snakBarService.openSnackBar('Successfully edited', 'Close');
+            this.router.navigate(['pages/poll/list']);
+          },
+          error: (err: any) => {
 
+          }
         }
-      }
+        )
+      } else {
+        this.service.createPoll({
+          'question': this.titleFormControl?.value as string,
+          'options': this.options,
+          'cant_options': this.options.length,
+          'user_id': JSON.parse(sessionStorage.getItem('currentUser')!).username,
+          'total_participants': 0
+        }, "poll").subscribe({
+          next: (result: any) => {
+            console.warn("resulto bien", result)
+            this.snakBarService.openSnackBar('Successfully created', 'Close');
+            this.router.navigate(['pages/poll/list']);
+          },
+          error: (err: any) => {
 
-      )
+          }
+        }
+        )
+      }
     }
-    /* if (this.generalDataFormGroup.valid) {
-       this.equipmentDataGridService.dataToPass.forEach((value, index) => {
-         this.content.push({
-           equipmentId: value.equipment,
-           quantity: value.quantity,
-         });
-       });
-       this.service
-         .create(
-           {
-             totalEquipmentHours: this.totalManHours,
-             resourceCreateInput: {
-               code: this.generalDataFormGroup.controls['code'].value as string,
-               description: this.generalDataFormGroup.controls['description']
-                 .value as string,
-               price: 0,
-               unitOfMeasurementId: this.generalDataFormGroup.controls['uom']
-                 .value as string,
-             },
-           },
-           this.content
-         )
-         .subscribe(
-           (data) => {
-             this.cleanData();
-             this.snakBarService.openSnackBar(fieldWasCreated, 'Cerrar');
-           },
-           (error) => {
-             this.snakBarService.openSnackBar(
-               fieldWasCreatedError,
-               'Cerrar',
-               {},
-               'error'
-             );
-           }
-         );
-     }*/
   }
 }
